@@ -1,0 +1,34 @@
+<!-- public/write.html -->
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Dictionary Entry Form</title>
+</head>
+<body>
+  <h1>Create Dictionary Entry</h1>
+  <form id="dictionaryForm">
+    <label for="word">Word: </label>
+    <input type="text" id="word" name="word"><br>
+
+    <label for="definition">Definition: </label>
+    <textarea id="definition" name="definition"></textarea><br>
+
+    <label for="wordLanguage">Word Language: </label>
+    <select id="wordLanguage" name="wordLanguage">
+      <!-- Populate this dropdown with available languages -->
+    </select><br>
+
+    <label for="definitionLanguage">Definition Language: </label>
+    <select id="definitionLanguage" name="definitionLanguage">
+      <!-- Populate this dropdown with available languages -->
+    </select><br>
+
+    <button type="submit">Submit</button>
+  </form>
+
+  <div id="message"></div>
+
+  <script src="client.js"></script>
+</body>
+</html>
