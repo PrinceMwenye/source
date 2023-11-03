@@ -1,6 +1,5 @@
 // public/client.js
 
-// Function to create a new entry via a POST request
 function createNewEntry(word, definition, wordLanguage, definitionLanguage) {
     const entryData = {
         word: word,
