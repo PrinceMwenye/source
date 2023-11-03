@@ -1,5 +1,3 @@
-// public/client.js
-
 function createNewEntry(word, definition, wordLanguage, definitionLanguage) {
     const entryData = {
         word: word,
@@ -8,13 +6,8 @@ function createNewEntry(word, definition, wordLanguage, definitionLanguage) {
         definitionLanguage: definitionLanguage,
     };
 
-    fetch('http://localhost:3000/api/v1/definition', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(entryData),
-        })
+    // Check if the word already exists before creating a new entry
+    fetch(`http://localhost:3000/api/v1/definition/${word}`)
         .then((response) => {
             if (!response.ok) {
                 throw new Error(`HTTP error! Status: ${response.status}`);
@@ -22,14 +15,54 @@ function createNewEntry(word, definition, wordLanguage, definitionLanguage) {
             return response.json();
         })
         .then((data) => {
-            // Handle the response data here
-            console.log('New entry created:', data);
+            const userResponse = confirm(`The word "${word}" already exists. Do you want to update its definition?`);
+            if (userResponse) {
+                // User chose to update the definition; send a PATCH request
+                fetch(`http://localhost:3000/api/v1/definition/${word}`, {
+                        method: 'PATCH',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(entryData),
+                    })
+                    .then((response) => {
+                        if (!response.ok) {
+                            throw new Error(`HTTP error! Status: ${response.status}`);
+                        }
+                        return response.json();
+                    })
+                    .then((data) => {
+                        console.log('Definition updated:', data);
+                    })
+                    .catch((error) => {
+                        console.error('Fetch error:', error);
+                    });
+            }
         })
         .catch((error) => {
-            // Handle any errors that occurred during the fetch
-            console.error('Fetch error:', error);
+            // Word does not exist; create a new entry
+            fetch('http://localhost:3000/api/v1/definition', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(entryData),
+                })
+                .then((response) => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! Status: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then((data) => {
+                    console.log('New entry created:', data);
+                })
+                .catch((error) => {
+                    console.error('Fetch error:', error);
+                });
         });
 }
+
 
 // Function to handle form submission
 function handleFormSubmit(event) {
