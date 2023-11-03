@@ -6,7 +6,6 @@ document.addEventListener("DOMContentLoaded", () => {
     searchButton.addEventListener("click", () => {
         const wordToSearch = searchInput.value;
 
-        // Send a GET fetch request to retrieve the word from the database
         fetch(`http://localhost:3000/api/v1/definition/${wordToSearch}`, {
                 method: "GET",
                 headers: {
@@ -20,7 +19,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 return response.json();
             })
             .then((data) => {
-                // Display the search results on the page
                 searchResults.innerHTML = `Definition: ${data.definition}`;
             })
             .catch((error) => {
