@@ -11,9 +11,9 @@ function createNewEntry(word, definition, wordLanguage, definitionLanguage) {
             if (!response.ok) {
                 throw new Error(`HTTP error! Status: ${response.status}`);
             }
-            return response.json();
+            return Promise.all([response.status, response.json()]); // Include the status code
         })
-        .then((data) => {
+        .then(([status, data]) => {
             const userResponse = confirm(`The word "${word}" already exists. Do you want to update its definition?`);
             if (userResponse) {
                 fetch(`http://localhost:3000/api/v1/definition/${word}`, {
@@ -27,10 +27,10 @@ function createNewEntry(word, definition, wordLanguage, definitionLanguage) {
                         if (!response.ok) {
                             throw new Error(`HTTP error! Status: ${response.status}`);
                         }
-                        return response.json();
+                        return Promise.all([response.status, response.json()]); // Include the status code
                     })
-                    .then((data) => {
-                        console.log('Definition updated:', data);
+                    .then(([status, data]) => {
+                        displayResponse(status, data); // Pass status and data to the display function
                     })
                     .catch((error) => {
                         console.error('Fetch error:', error);
@@ -49,10 +49,10 @@ function createNewEntry(word, definition, wordLanguage, definitionLanguage) {
                     if (!response.ok) {
                         throw new Error(`HTTP error! Status: ${response.status}`);
                     }
-                    return response.json();
+                    return Promise.all([response.status, response.json()]); // Include the status code
                 })
-                .then((data) => {
-                    console.log('New entry created:', data);
+                .then(([status, data]) => {
+                    displayResponse(status, data); // Pass status and data to the display function
                 })
                 .catch((error) => {
                     console.error('Fetch error:', error);
@@ -60,9 +60,14 @@ function createNewEntry(word, definition, wordLanguage, definitionLanguage) {
         });
 }
 
+function displayResponse(status, data) {
+    const responseDisplay = document.getElementById('responseDisplay');
+    responseDisplay.innerHTML = `
+      <p>Status Code: ${status}</p>
+      <pre>${JSON.stringify(data, null, 2)}</pre>`;
+}
 
 function handleFormSubmit(event) {
-    console.log("about to submit")
     event.preventDefault();
 
     const word = document.getElementById('word').value;
