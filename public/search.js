@@ -13,13 +13,10 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
             })
             .then((response) => {
-                if (!response.ok) {
-                    throw new Error(`HTTP error! Status: ${response.status}`);
-                }
-                return response.json();
+                return Promise.all([response.status, response.json()]); // Extract status and response body
             })
-            .then((data) => {
-                searchResults.innerHTML = `Definition: ${data.definition}`;
+            .then(([status, data]) => {
+                searchResults.innerHTML = `Status Code: ${status}<br><br>Response:<pre>${JSON.stringify(data, null, 2)}</pre>`;
             })
             .catch((error) => {
                 console.error("Error fetching data:", error);
