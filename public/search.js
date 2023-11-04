@@ -13,7 +13,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
             })
             .then((response) => {
-                return Promise.all([response.status, response.json()]); // Extract status and response body
+                return Promise.all([response.status, response.json()]); 
             })
             .then(([status, data]) => {
                 searchResults.innerHTML = `Status Code: ${status}<br><br>Response:<pre>${JSON.stringify(data, null, 2)}</pre>`;
