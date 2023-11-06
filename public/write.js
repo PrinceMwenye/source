@@ -25,7 +25,7 @@ function createNewEntry(word, definition, wordLanguage, definitionLanguage) {
                     })
                     .then((response) => {
                         if (!response.ok) {
-                            throw an Error(`HTTP error! Status: ${response.status}`);
+                            throw new Error(`HTTP error! Status: ${response.status}`);
                         }
                         return Promise.all([response.status, response.json()]); // Include the status code
                     })
