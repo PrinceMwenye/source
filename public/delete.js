@@ -2,11 +2,13 @@ document.addEventListener("DOMContentLoaded", () => {
   const deleteButton = document.getElementById("deleteButton");
   const deleteInput = document.getElementById("deleteInput");
   const deleteResponse = document.getElementById("deleteResponse");
+  const messages = require('../messages.json');
+
 
   deleteButton.addEventListener("click", async () => {
       const wordToDelete = deleteInput.value.trim();
       if (!wordToDelete) {
-          deleteResponse.innerHTML = "Please enter a word to delete.";
+          deleteResponse.innerHTML = messages.MESSAGE_ENTER_WORD;
           return;
       }
 
@@ -22,7 +24,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
           if (!checkResponse.ok) {
               if (checkResponse.status === 404) {
-                  deleteResponse.innerHTML = "Word does not exist.";
+                  deleteResponse.innerHTML = messages.MESSAGE_WORD_DOES_NOT_EXIST;
               } else {
                   throw new Error(`HTTP status ${checkResponse.status}`);
               }
@@ -35,7 +37,7 @@ document.addEventListener("DOMContentLoaded", () => {
           // If there is no word property, log this fact and return.
           if (!checkData.word) {
               console.error("Word property is missing in response:", checkData);
-              deleteResponse.innerHTML = "Word does not exist.";
+              deleteResponse.innerHTML = messages.MESSAGE_WORD_DOES_NOT_EXIST;
               return;
           }
 
@@ -51,7 +53,7 @@ document.addEventListener("DOMContentLoaded", () => {
               deleteResponse.innerHTML = `Word "${wordToDelete}" deleted successfully.`;
           } else {
               const deleteData = await deleteResponseResult.json();
-              deleteResponse.innerHTML = deleteData.message || "An error occurred during deletion.";
+              deleteResponse.innerHTML = deleteData.message || messages.MESSAGE_ERROR_OCCURRED;
           }
       } catch (error) {
           console.error("Error during the delete operation:", error);
