@@ -6,8 +6,12 @@ function createNewEntry(word, definition, wordLanguage, definitionLanguage) {
         definitionLanguage: definitionLanguage,
     };
 
-    fetch(`https://serversidelab6-55921ff3f339.herokuapp.com/api/v1/definition/${word}`)
-        .then((response) => {
+    fetch(`https://serversidelab6-55921ff3f339.herokuapp.com/api/v1/definition/${word}`, {
+            method: "GET",
+            headers: {
+                'Accept': 'application/json'
+            }
+        }).then((response) => {
             if (!response.ok) {
                 throw new Error(`HTTP error! Status: ${response.status}`);
             }
