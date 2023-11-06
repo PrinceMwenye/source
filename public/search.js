@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", () => {
     searchButton.addEventListener("click", () => {
         const wordToSearch = searchInput.value;
 
-        fetch(`http://localhost:3000/api/v1/definition/${wordToSearch}`, {
+        fetch(`https://serversidelab6-55921ff3f339.herokuapp.com/api/v1/definition/${wordToSearch}`, {
                 method: "GET",
                 headers: {
                     'Accept': 'application/json'

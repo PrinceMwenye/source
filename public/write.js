@@ -6,7 +6,7 @@ function createNewEntry(word, definition, wordLanguage, definitionLanguage) {
         definitionLanguage: definitionLanguage,
     };
 
-    fetch(`http://localhost:3000/api/v1/definition/${word}`)
+    fetch(`https://serversidelab6-55921ff3f339.herokuapp.com/api/v1/definition/${word}`)
         .then((response) => {
             if (!response.ok) {
                 throw new Error(`HTTP error! Status: ${response.status}`);
@@ -16,7 +16,7 @@ function createNewEntry(word, definition, wordLanguage, definitionLanguage) {
         .then(([status, data]) => {
             const userResponse = confirm(`The word "${word}" already exists. Do you want to update its definition?`);
             if (userResponse) {
-                fetch(`http://localhost:3000/api/v1/definition/${word}`, {
+                fetch(`https://serversidelab6-55921ff3f339.herokuapp.com/api/v1/definition/${word}`, {
                         method: 'PATCH',
                         headers: {
                             'Content-Type': 'application/json',
@@ -38,7 +38,7 @@ function createNewEntry(word, definition, wordLanguage, definitionLanguage) {
             }
         })
         .catch((error) => {
-            fetch('http://localhost:3000/api/v1/definition', {
+            fetch('https://serversidelab6-55921ff3f339.herokuapp.com/api/v1/definition', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
