@@ -14,7 +14,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       try {
           // Check if the word exists before attempting to delete
-          const checkUrl = `http://localhost:3000/api/v1/definition/${encodeURIComponent(wordToDelete)}`;
+          const checkUrl = `https://serversidelab6-55921ff3f339.herokuapp.com/api/v1/definition/${encodeURIComponent(wordToDelete)}`;
           const checkResponse = await fetch(checkUrl, {
               method: "GET",
               headers: {
